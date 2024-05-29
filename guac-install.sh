@@ -223,6 +223,8 @@ if [[ "${NAME}" == "Ubuntu" ]] || [[ "${NAME}" == "Linux Mint" ]]; then
     JPEGTURBO="libjpeg-turbo8-dev"
     if [[ "${VERSION_ID}" == "16.04" ]]; then
         LIBPNG="libpng12-dev"
+    elif [[ "${VERSION_ID}" == "24.04" ]]; then
+        LIBPNG="libpng-dev"
     else
         LIBPNG="libpng-dev"
     fi
