@@ -1,5 +1,6 @@
 #!/bin/bash
 # Something isn't working? # tail -f /var/log/messages /var/log/syslog /var/log/tomcat*/*.out /var/log/mysql/*.log
+echo "This version of guac-install is forked by SecretWolfie for Ubuntu 24.04 support and Tomcat10. You're welcome. #FurryFandom"
 
 # Check if user is root or sudo
 if ! [ $( id -u ) = 0 ]; then
@@ -15,11 +16,11 @@ fi
 
 # Version number of Guacamole to install
 # Homepage ~ https://guacamole.apache.org/releases/
-GUACVERSION="1.5.4"
+GUACVERSION="1.5.5"
 
 # Latest Version of MySQL Connector/J if manual install is required (if libmariadb-java/libmysql-java is not available via apt)
 # Homepage ~ https://dev.mysql.com/downloads/connector/j/
-MCJVER="8.0.27"
+MCJVER="8.4.0"
 
 # Colors to use for output
 YELLOW='\033[1;33m'
@@ -275,15 +276,15 @@ else
     LIBJAVA=""
 fi
 
-# tomcat9 is the latest version
-# tomcat8.0 is end of life, but tomcat8.5 is current
+# tomcat10 is latest
+# tomcat9 is legacy, but current
 # fallback is tomcat7
-if [[ $( apt-cache show tomcat9 2> /dev/null | egrep "Version: 9" | wc -l ) -gt 0 ]]; then
+if [[ $( apt-cache show tomcat10 2> /dev/null | egrep "Version: 10" | wc -l ) -gt 0 ]]; then
+    echo -e "${BLUE}Found tomcat10 package...${NC}"
+    TOMCAT="tomcat10"
+elif [[ $( apt-cache show tomcat9 2> /dev/null | egrep "Version: 9" | wc -l ) -gt 0 ]]; then
     echo -e "${BLUE}Found tomcat9 package...${NC}"
     TOMCAT="tomcat9"
-elif [[ $( apt-cache show tomcat8 2> /dev/null | egrep "Version: 8.[5-9]" | wc -l ) -gt 0 ]]; then
-    echo -e "${BLUE}Found tomcat8.5+ package...${NC}"
-    TOMCAT="tomcat8"
 elif [[ $( apt-cache show tomcat7 2> /dev/null | egrep "Version: 7" | wc -l ) -gt 0 ]]; then
     echo -e "${BLUE}Found tomcat7 package...${NC}"
     TOMCAT="tomcat7"
